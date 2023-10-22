@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">tugas4</string>
+    <string name="Laki">laki-laki</string>
+    <string name="Wanita">wanita</string>
+    <string name="submit">submit</string>
+</resources>
