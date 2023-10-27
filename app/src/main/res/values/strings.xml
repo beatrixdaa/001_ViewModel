@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">tugas4</string>
-    <string name="Laki">laki-laki</string>
-    <string name="Wanita">wanita</string>
-    <string name="submit">submit</string>
+    <string name="Laki">Laki-laki</string>
+    <string name="Wanita">Perempuan</string>
+    <string name="Belummenikah">belummenikah</string>
+    <string name="Menikah">menikah</string>
+    <string name="register">Register</string>
+
 </resources>

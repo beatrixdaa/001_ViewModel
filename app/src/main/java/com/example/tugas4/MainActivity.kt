@@ -59,10 +59,16 @@ class MainActivity : ComponentActivity() {
                 ) {
                     TampilLayout()
                 }
+
+
             }
         }
     }
 }
+
+
+
+
 
 @Composable
 fun SelectJK(
@@ -70,6 +76,7 @@ fun SelectJK(
     oneSelectionChanged: (String) -> Unit = {}
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
+
 
     Column(modifier = Modifier.padding(16.dp)) {
         options.forEach { item ->
@@ -91,6 +98,7 @@ fun SelectJK(
                 Text(item)
             }
 
+
         }
 
     }
@@ -104,6 +112,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
     var textAlmt by remember { mutableStateOf("") }
+    var textEmal by remember { mutableStateOf("") }
+
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -115,7 +125,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap") },
+        label = { Text(text = "Username") },
         onValueChange = {
             textNama = it
         }
@@ -127,7 +137,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nomor Telepon") },
+        label = { Text(text = " Telepon") },
         onValueChange = {
             textTlp = it
         }
@@ -138,25 +148,41 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Alamat Anda") },
+        label = { Text(text = "Alamat ") },
         onValueChange = {
             textAlmt = it
         }
     )
+    OutlinedTextField(
+        value = textEmal,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email ") },
+        onValueChange = {
+            textEmal = it
 
-
+        }
+    )
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         oneSelectionChanged = { cobaViewModel.setJenisK(it) })
 
+    SelectSTTS(
+        options = jenis.map { id -> context.resources.getString(id) },
+        oneSelectionChanged = { cobaViewModel.setJenisK(it) })
+
+
+
+
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp,textAlmt, dataForm.sex)
+            cobaViewModel.insertData(textNama, textTlp,textAlmt,textEmal, dataForm.sex,dataForm.sts )
         }
     ) {
         Text(
-            text = stringResource(R.string.submit),
+            text = stringResource(R.string.register),
             fontSize = 16.sp
         )
     }
@@ -165,11 +191,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTelp,
         alamatnya = cobaViewModel.alamat,
-        jenisnya = cobaViewModel.jenisKl
+        jenisnya = cobaViewModel.jenisKl,
+        emailnya = cobaViewModel.email
     )
 }
-
-
 
 
 @Composable
@@ -191,7 +216,7 @@ fun TampilLayout(
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String) {
+fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String, emailnya: String) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
@@ -217,6 +242,11 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: S
         )
         Text(
             text = "Alamat : " + alamatnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 1.5.dp)
+        )
+        Text(
+            text = "Email : " + emailnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 1.5.dp)
         )
